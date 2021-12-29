@@ -82,7 +82,7 @@ namespace Creating_and_using__Excel_Files_with_Csharp
             while (string.IsNullOrWhiteSpace(wordsheet.Cells[row, cinCol].Value?.ToString()) == false)
             {
                 PersonModel p = new();
-                //p.Id = int.Parse(wordsheet.Cells[row, col].Value.ToString());
+               
                 p.cin = wordsheet.Cells[row,cinCol].Value.ToString();
                 p.Prenom = wordsheet.Cells[row,prenomCol].Value.ToString();
                 p.Nom= wordsheet.Cells[row,nomCol].Value.ToString();
