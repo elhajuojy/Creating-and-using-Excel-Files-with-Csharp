@@ -86,11 +86,13 @@ namespace Creating_and_using__Excel_Files_with_Csharp
                 p.cin = wordsheet.Cells[row,cinCol].Value.ToString();
                 p.Prenom = wordsheet.Cells[row,prenomCol].Value.ToString();
                 p.Nom= wordsheet.Cells[row,nomCol].Value.ToString();
-                p.Adresse = wordsheet.Cells[row,AdresseCol].Value.ToString();
+                p.Adresse =  wordsheet.Cells[row,AdresseCol].Value.ToString();
                 p.filiere= wordsheet.Cells[row,filierecol].Value.ToString();
                 p.gender= wordsheet.Cells[row,gendercol].Value.ToString();
                 p.massar= wordsheet.Cells[row,massarcol].Value.ToString();
                 p.dateNais = DateTime.Parse(wordsheet.Cells[row, dataNaisCol].Value.ToString());
+
+
                 DataRow ligne = table.NewRow();
                 ligne["cin"] = wordsheet.Cells[row,cinCol].Value.ToString();
                 ligne["prenom"] = wordsheet.Cells[row,prenomCol].Value.ToString();
