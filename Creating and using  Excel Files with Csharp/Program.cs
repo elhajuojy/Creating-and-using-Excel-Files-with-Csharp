@@ -25,7 +25,7 @@ namespace Creating_and_using__Excel_Files_with_Csharp
 
 
             //the path where you want to put the file and the name file + .xlsx
-            var file = new FileInfo(@"C:\SaveExalFiles\ista-ntic.xlsx");
+            var file = new FileInfo(@"C:\SaveExalFiles\ista-ntic_info.xlsx");
 
 
 
@@ -36,14 +36,18 @@ namespace Creating_and_using__Excel_Files_with_Csharp
             //await SaveExcelFile(people, file);
 
            List<PersonModel> pepoleFromExcel = await LoadExcelFile(file);
+            using var package = new ExcelPackage(file);
 
+            await package.LoadAsync(file);
+
+            var wordsheet = package.Workbook.Worksheets[0];
 
             int count = 0;
             foreach (var person in pepoleFromExcel)
             {
                 Console.WriteLine($"{person.cin} {person.Prenom} {person.Nom} {count} ");
                 count++;
-               
+
             }
 
 
@@ -58,7 +62,7 @@ namespace Creating_and_using__Excel_Files_with_Csharp
 
             da.SelectCommand = cmd;
             da.Fill(table);
-           
+
 
             List<PersonModel> output = new();
             using var package = new ExcelPackage(file);
@@ -71,33 +75,34 @@ namespace Creating_and_using__Excel_Files_with_Csharp
             int filierecol = 4;
             int nomCol = 10;
             int cinCol = 8;
-            int massarcol =9 ;
-            int prenomCol =11;
+            int massarcol = 9;
+            int prenomCol = 11;
             int gendercol = 12;
-            int AdresseCol= 14;
+            int Adresse = 14;
             int dataNaisCol = 13;
             int phoneCol = 15;
-            
-            
-            while (string.IsNullOrWhiteSpace(wordsheet.Cells[row, cinCol].Value?.ToString()) == false)
+
+            while (string.IsNullOrEmpty(wordsheet.Cells[row, cinCol].Value?.ToString()) == false)
             {
                 PersonModel p = new();
-               
-                p.cin = wordsheet.Cells[row,cinCol].Value.ToString();
-                p.Prenom = wordsheet.Cells[row,prenomCol].Value.ToString();
-                p.Nom= wordsheet.Cells[row,nomCol].Value.ToString();
-                p.Adresse =  wordsheet.Cells[row,AdresseCol].Value.ToString();
-                p.filiere= wordsheet.Cells[row,filierecol].Value.ToString();
-                p.gender= wordsheet.Cells[row,gendercol].Value.ToString();
-                p.massar= wordsheet.Cells[row,massarcol].Value.ToString();
+
+                p.cin = wordsheet.Cells[row, cinCol].Value.ToString();
+                p.Prenom = wordsheet.Cells[row, prenomCol].Value.ToString();
+                p.Nom = wordsheet.Cells[row, nomCol].Value.ToString();
+                //Adresse are xml 
+                p.Adresse = wordsheet.Cells[row, Adresse].Value.ToString();
+
+                p.filiere = wordsheet.Cells[row, filierecol].Value.ToString();
+                p.gender = wordsheet.Cells[row, gendercol].Value.ToString();
+                p.massar = wordsheet.Cells[row, massarcol].Value.ToString();
                 p.dateNais = DateTime.Parse(wordsheet.Cells[row, dataNaisCol].Value.ToString());
 
 
                 DataRow ligne = table.NewRow();
-                ligne["cin"] = wordsheet.Cells[row,cinCol].Value.ToString();
-                ligne["prenom"] = wordsheet.Cells[row,prenomCol].Value.ToString();
-                ligne["nom"] = wordsheet.Cells[row,nomCol].Value.ToString();
-                ligne["Adresse"] = wordsheet.Cells[row, AdresseCol].Value.ToString();
+                ligne["cin"] = wordsheet.Cells[row, cinCol].Value.ToString();
+                ligne["prenom"] = wordsheet.Cells[row, prenomCol].Value.ToString();
+                ligne["nom"] = wordsheet.Cells[row, nomCol].Value.ToString();
+                ligne["Adresse"] = wordsheet.Cells[row, Adresse].Value.ToString();
                 ligne["filiere"] = wordsheet.Cells[row, filierecol].Value.ToString();
                 ligne["gander"] = wordsheet.Cells[row, gendercol].Value.ToString();
                 ligne["massar"] = wordsheet.Cells[row, massarcol].Value.ToString();
@@ -109,7 +114,7 @@ namespace Creating_and_using__Excel_Files_with_Csharp
                 output.Add(p);
 
                 row++;
-                
+
             }
 
 
